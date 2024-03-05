@@ -1,0 +1,58 @@
+List p=18f4520
+    include<p18f4520.inc>
+    CONFIG OSC=INTIO67
+    CONFIG WDT=OFF
+    org 0x00
+    
+    MUL_ADD macro a0,b0,a1,b1,c0
+	MOVF a0,W
+	MULWF b0
+	MOVFF PRODL,c0
+	MOVF a1,W
+	MULWF b1
+	MOVF PRODL,WREG
+	ADDWF c0
+	endm
+    
+    initial:
+	;a
+	MOVLW 0X25
+	MOVWF 0X10
+	MOVLW 0X1F
+	MOVWF 0X11
+	MOVLW 0X1D
+	MOVWF 0X12
+	MOVLW 0X30
+	MOVWF 0X13
+	;b
+	MOVLW 0X04
+	MOVWF 0X20
+	MOVLW 0X03
+	MOVWF 0X21
+	MOVLW 0X02
+	MOVWF 0X22
+	MOVLW 0X01
+	MOVWF 0X23
+	RCALL multiply
+	GOTO finish
+	
+	
+	
+	
+    multiply:
+	MUL_ADD 0X10,0X20,0X11,0X22,0X00
+	MUL_ADD 0X10,0X21,0X11,0X23,0X01
+	MUL_ADD 0X12,0X20,0X13,0X22,0X02
+	MUL_ADD 0X12,0X21,0X13,0X23,0X03
+	RETURN
+	
+    finish:
+	end
+	
+    
+    
+	
+    
+    
+
+
