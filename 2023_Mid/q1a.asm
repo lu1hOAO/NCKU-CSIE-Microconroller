@@ -1,0 +1,49 @@
+List p=18f4520
+    #include<p18f4520.inc>
+    CONFIG OSC=INTIO67
+    CONFIG WDT=OFF
+    org 0x00
+    MOVLW 0X0D
+    MOVWF 0X11
+    MOVLW 0X01
+    CPFSGT 0X11
+	BRA small
+    INCF WREG
+    CPFSGT 0X11
+	BRA small
+    SUBWF 0X11,F
+    LFSR 0,0X022
+    LFSR 1,0X020
+    LFSR 2,0X021
+    MOVLW 0X01
+    MOVFF WREG,0X20
+    MOVFF WREG,0X21
+    CALL fib
+    BRA gray
+fib:
+    MOVFF POSTINC1,WREG
+    ADDWF POSTINC2,W
+    MOVFF WREG,POSTINC0
+    DECFSZ 0X11
+	BRA fib
+    RETURN
+small:
+    MOVFF 0X11,0X00
+    BRA finish
+gray:
+    CLRF WREG
+    ADDWF POSTDEC0,F
+    MOVFF INDF0,0X00
+    MOVFF 0X00,0X01
+    MOVFF 0X00,0X10
+    BCF STATUS,0
+    RRCF 0X01
+    MOVFF 0X01,WREG
+    XORWF 0X00,F
+    BTFSC 0X10,7
+	BSF 0X00,7
+finish:
+    NOP
+    end
+
+
