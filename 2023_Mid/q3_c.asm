@@ -1,0 +1,51 @@
+List p=18f4520
+    #include<p18f4520.inc>
+    CONFIG OSC=INTIO67
+    CONFIG WDT=OFF
+    org 0x00
+CAU macro n
+    CLRF 0X11
+    CLRF 0X12
+    BTFSC n,0
+	INCF 0X11
+    BTFSC n,1
+	INCF 0X11
+    BTFSC n,2
+	INCF 0X11
+    BTFSC n,3
+	INCF 0X11
+    BTFSC n,4
+	INCF 0X11
+    BTFSC n,5
+	INCF 0X11
+    BTFSC n,6
+	INCF 0X11
+    BTFSC n,7
+	INCF 0X11
+    BTFSC 0X11,0
+	BSF 0X12,0
+ endm
+    MOVLW 0X4A
+    MOVWF 0X10
+    CAU 0X10
+    BTFSC 0X12,0
+	BSF 0X00,0
+    MOVLW 0XC2
+    MOVWF 0X10
+    CAU 0X10
+    BTFSC 0X12,0
+	BSF 0X00,1
+    MOVLW 0X7B
+    MOVWF 0X10
+    CAU 0X10
+    BTFSC 0X12,0
+	BSF 0X00,2
+    MOVLW 0XA3
+    MOVWF 0X10
+    CAU 0X10
+    BTFSC 0X12,0
+	BSF 0X00,3
+    NOP
+    end
+
+
