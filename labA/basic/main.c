@@ -8,11 +8,14 @@ char str[20];
 
 void main(void) 
 {
-    SYSTEM_Initialize();
+    
+    SYSTEM_Initialize() ;
     UART_Initialize();
-    while(1){
-        MyusartRead();
-    }
+    while(1);
     return;
 }
 
+void __interrupt(high_priority) H_ISR(void)
+{
+;
+}
